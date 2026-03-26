@@ -1,42 +1,47 @@
-<div class="w-64 bg-pink-600 text-white p-6 shadow-xl">
-    <h1 class="text-xl font-bold mb-10 border-b border-pink-400 pb-4 text-center">
-        UIC OPEN LAB
-    </h1>
-    
-    <nav class="space-y-4">
-        <a href="/monitoring" class="flex items-center p-3 rounded-xl hover:bg-pink-700 transition font-bold">
-            <span class="mr-3">🕒</span> Monitoring
-        </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UIC Open Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #fff5f8; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+    <nav class="w-72 bg-gradient-to-b from-[#ff71ce] to-[#b967ff] p-8 text-white flex flex-col shadow-xl">
+        <div class="mb-12">
+            <h1 class="text-3xl font-black italic tracking-tighter">UIC LAB</h1>
+        </div>
 
-        @if(auth()->guard('admin')->check())
-            <div class="pt-4 mt-4 border-t border-pink-400">
-                <p class="text-[10px] uppercase font-black mb-2 opacity-70 tracking-widest text-pink-200">Management</p>
-                
-                <a href="/borrow" class="flex items-center p-3 rounded-xl hover:bg-pink-700 transition font-bold">
-                    <span class="mr-3">📦</span> Equipment Log
-                </a>
-                
-                <a href="/bookings" class="flex items-center p-3 rounded-xl hover:bg-pink-700 transition font-bold">
-                    <span class="mr-3">📅</span> Lab Bookings
-                </a>
+        <div class="space-y-4 flex-1">
+            <a href="/monitoring" class="flex items-center p-4 rounded-2xl hover:bg-white/20 transition font-black text-sm uppercase tracking-widest">
+                Monitoring
+            </a>
+            
+            @if(Auth::guard('admin')->check())
+                <div class="pt-6 mt-6 border-t border-white/20">
+                    <a href="/admin/dashboard" class="flex items-center p-4 rounded-2xl hover:bg-white/20 transition font-black text-sm uppercase tracking-widest">
+                        Dashboard
+                    </a>
+                </div>
+            @endif
+        </div>
 
-                <a href="/reports" class="flex items-center p-3 rounded-xl hover:bg-pink-700 transition font-bold">
-                    <span class="mr-3">📊</span> Usage Reports
-                </a>
-
-                <form action="/admin/logout" method="POST" class="mt-8">
-                    @csrf
-                    <button class="w-full text-left p-3 rounded-xl bg-pink-800 hover:bg-red-600 transition font-bold text-sm">
-                        Logout Admin
-                    </button>
-                </form>
-            </div>
+        @if(Auth::guard('admin')->check())
+            <form action="/admin/logout" method="POST">
+                @csrf
+                <button class="w-full bg-white/10 p-4 rounded-2xl font-black text-xs uppercase">Logout</button>
+            </form>
         @else
-            <div class="pt-4 mt-4 border-t border-pink-400">
-                <a href="/admin/login" class="flex items-center p-3 rounded-xl border border-pink-400 hover:bg-pink-500 transition text-xs font-bold italic">
-                    Admin Access Only
-                </a>
-            </div>
+            <a href="/admin/login" class="text-center bg-white/10 p-4 rounded-2xl font-black text-xs uppercase">Admin Login</a>
         @endif
     </nav>
-</div>
+
+    <main class="flex-1 p-12 overflow-y-auto">
+        @yield('content')
+    </main>
+</body>
+</html>
